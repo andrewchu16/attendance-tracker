@@ -70,7 +70,7 @@ function AttendanceUpload() {
     //     });
     // });
 
-     fetch("http://127.0.0.1:5000/upload_attendance", {
+     fetch("http://127.0.0.1:5173/upload_attendance", {
        method: "POST",
        body: file,
       headers: {

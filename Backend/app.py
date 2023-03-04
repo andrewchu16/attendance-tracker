@@ -79,7 +79,6 @@ def upload_attendance():
         "ticket_id": <id>
     }
     """
-    print("tester?")
     if "attendance_photo" in request.files and request.files["attendance_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
         image = request.files["attendance_photo"]
     else:
