@@ -1,4 +1,5 @@
 import face_recognition
+from PIL import Image, ImageDraw
 
 """Returns the encoding for a student's face
 """
@@ -10,6 +11,7 @@ def encode_student(image_path: str) -> list:
     return None
 
 def take_attendance(image_path: str, students: dict) -> list:
+<<<<<<< Updated upstream
     t = 0.4
     
     # Load the student photos to numpy format for comparisons
@@ -25,13 +27,20 @@ def take_attendance(image_path: str, students: dict) -> list:
         number_of_times_to_upsample = 1,
         model = "small"
     )
+    # with Image.open(image_path).convert("RGB") as image:
+    #     canvas = ImageDraw.Draw(image)
+    #     for face in face_locations:
+    #         x, y, w, h = face
+    #         canvas.rectangle(((y, x), (h, w)), outline="red")
+    #         image.save(image_path, "JPEG")
+    
     
     # can change num_jitters and model to become more accurate but also slower
     face_encodings = face_recognition.face_encodings(
         face_image = loaded_class_photo,
         known_face_locations = face_locations,
         num_jitters = 1,
-        model = "small"
+        model = "large"
     )
 
     faces = []
@@ -50,6 +59,20 @@ def take_attendance(image_path: str, students: dict) -> list:
                 "student": id
             }
             faces.append(face)
+
+    print(image_path)
+    #mark up the class photo and draw rectangles around each face with the name
+    with Image.open(image_path).convert("RGB") as image:
+        canvas = ImageDraw.Draw(image)
+        for face in faces:
+            x, y, w, h, id = face["x"], face["y"], face["width"], face["height"], face["student"]
+            #print(x, y, w, h)
+            canvas.rectangle(((y, x), (h, w)), outline="red")
+            #print(students)
+            message = students[id]["first_name"] + " " + students[id]["last_name"]
+            text_w, text_h = canvas.textsize(message)
+            canvas.text((y+h+text_h, x+w//2-text_w//2), message, fill="red")
+            image.save(image_path, "JPEG")
 
     # but in json format right? or do we draw the bounding boxes in
     return faces

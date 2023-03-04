@@ -25,9 +25,10 @@ def upload_student():
         "photo_path": "photos/rhhs_lefler.jpg"
     }
     """
-    first_name = request.args.get("first_name")
-    last_name = request.args.get("last_name")
-    details = request.args.get("details")
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    details = request.form.get("details")
+    print(first_name, last_name, details)
     status = 200
     if "student_photo" in request.files and request.files["student_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
         image = request.files["student_photo"]
@@ -37,8 +38,8 @@ def upload_student():
     
     student_id = server.add_student(first_name, last_name, image, details)
 
-    response = make_response(redirect("http://127.0.0.1:5173/upload-students", f"{student_id}"))
-    response.status_code = 301
+    response = make_response(f"{student_id}")
+    response.status_code = status
     return response
         
     
