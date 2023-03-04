@@ -122,20 +122,31 @@ def get_attendance_results():
     """
     Send the json containing the location of students present in a particular image.
 
-    client request results for a "ticket_id" ("ticket_id" should be associated with an image in the server)
+    client request results for a "attendance_id" ("attendance_id" should be associated with an image in the server)
+    a null student id represents a face that could not be matched with an existing student
     server sends back:
     {
-        "status": <1 = found, 0 = not found(cache cleared from last input)>
-        "<student_id1>": [<top>, <right>, <bottom>, <left>]
-        "<student_id2>": [<top>, <right>, <bottom>, <left>]
-        "<student_id3>": null
-        "<student_id4>": [<top>, <right>, <bottom>, <left>]
+        "count": # of students found
+        "students": {
+            "<student_id1>": [<top>, <right>, <bottom>, <left>],
+            "<student_id2>": [<top>, <right>, <bottom>, <left>],
+            "<student_id4>": [<top>, <right>, <bottom>, <left>],
+            "null": [<top>, <right>, <bottom>, <left>]
+        }
     }
     """
-
-    return ""
-    # send the json
-    pass 
+    attendance_id = request.args.get("attendance_id")
+    attendance = server.get_attendance(attendance_id)
+    faces = attendance["faces"]
+    results = {
+        "count": len(faces),
+        "students": faces
+    }
+    results_json = json.dumps(results)
+    response = make_response(results_json)
+    response.status_code = 200
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/current_attendance", methods=["GET"])
 def get_current_attendance():
