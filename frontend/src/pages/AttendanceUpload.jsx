@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import localforage from "localforage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faTrash } from "@fortawesome/free-solid-svg-icons";
+import CanvasOverlay from "../components/CanvasOverlay";
 
 function AttendanceImage({ image, ticket_id }) {
-  console.log(ticket_id);
+  console.log(image);
   return (
-    <div className="bg-gray-100 rounded-lg flex justify-center items-center relative">
-        <img src={image} className="aspect-square rounded-lg object-scale-down" />
+    <div className="bg-gray-100 rounded-lg flex justify-center items-center relative aspect-square">
+      <CanvasOverlay className="h-full w-full absolute top-0 left-0" />
+      <img src={image} className="aspect-square rounded-lg object-scale-down" />
     </div>
   );
 }
@@ -70,34 +72,36 @@ function AttendanceUpload() {
     //     });
     // });
 
-     fetch("http://127.0.0.1:5173/upload_attendance", {
-       method: "POST",
-       body: file,
+    fetch("http://127.0.0.1:5000/upload_attendance", {
+      method: "POST",
+      body: file,
       headers: {
         "content-type": file.type,
-        "content-length": `${file.size}`
+        "content-length": `${file.size}`,
       },
     })
-      .then((res) => {res.json()})
+      .then((res) => {
+        res.json();
+      })
       .then((data) => {
         console.log(data);
         localforage.getItem("attendances").then((value) => {
-          const newAttendance = {
+          const newAttendanceData = {
             image: file,
-            ticket_id: data
+            ticket_id: data,
           };
           localforage
             .setItem(
               "attendances",
-              value !== null ? [...value, newAttendance] : [newAttendance]
+              value !== null ? [...value, newAttendanceData] : [newAttendanceData]
             )
             .then((value) => {
               setAttendances([
                 ...attendances,
                 <AttendanceImage
-                  image={window.URL.createObjectURL(newAttendance.image)}
-                  ticket_id={newAttendance.ticket_id}
-                  key={newAttendance.ticket_id}
+                  image={window.URL.createObjectURL(newAttendanceData.image)}
+                  ticket_id={newAttendanceData.ticket_id}
+                  key={newAttendanceData.ticket_id}
                 />,
               ]);
             });
