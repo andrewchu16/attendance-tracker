@@ -14,7 +14,7 @@ function Home() {
 }
 
 function Table(){
-  const [data, setData] = useState([])
+  /*const [data, setData] = useState([])
   useEffect(() => {
     fetch("http://127.0.0.1:5000/current_attendance", {
       method: "GET",
@@ -22,7 +22,8 @@ function Table(){
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
     []
-  });
+  });*/
+  const data = [{firstname:"bob", lastname:"smith", present:true}]
   return (
     <div className="text-xl">
       <table className="w-full m-0 border">
@@ -36,7 +37,13 @@ function Table(){
             <tr key={key} className="w-full p-1">
               <td className="w-1/6 px-5">{val.firstname}</td>
               <td className="w-1/6 px-1">{val.lastname}</td>
-              <td className="w-2/3 text-right px-5">{val.present}</td>
+              <td className="w-2/3 text-right px-5">{
+                () => { if (val.present){
+                  return "✓";
+                } else {
+                  return "✗";
+                }}
+              }</td>
             </tr>
           )
         })}
