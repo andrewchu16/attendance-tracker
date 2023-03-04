@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import localforage from "localforage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import CanvasOverlay from "../components/CanvasOverlay";
 
 function AttendanceImage({ image, ticketId, onDelete }) {
@@ -10,11 +10,6 @@ function AttendanceImage({ image, ticketId, onDelete }) {
     <div className="bg-gray-100 rounded-lg flex justify-center items-center relative aspect-square overflow-clip">
       <div className="z-20 opacity-0 absolute hover:opacity-100 h-full w-full transition-opacity cursor-pointer">
         <div className="bg-gray-900 h-full w-full opacity-30"></div>
-        <FontAwesomeIcon
-          icon={faTrash}
-          className="absolute right-5 top-5 text-4xl text-gray-600 hover:text-red-600 transition-colors"
-          onClick={onDelete}
-        />
       </div>
       <CanvasOverlay className="h-full w-full absolute top-0 left-0" />
       <img src={image} className="aspect-square object-scale-down" />

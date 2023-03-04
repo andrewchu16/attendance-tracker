@@ -4,7 +4,7 @@ function Home() {
   return (
     <div className="w-full justify-center items-center">
       <div className="w-full flexbox items-center py-6">
-        <h1 className="text-4xl text-center">HOME</h1>
+        <h1 className="text-4xl text-center">Student</h1>
       </div>
       <div className="w-full flexbox items-center px-20 py-12 mx-15">
         <Table />
