@@ -28,6 +28,7 @@ def upload_student():
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
     details = request.form.get("details")
+    print(details)
     print(first_name, last_name, details)
     status = 200
     if "student_photo" in request.files and request.files["student_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
@@ -165,9 +166,10 @@ def get_current_attendance():
     students = server.get_students()
     for id in sorted(students, key = lambda x: (students[x]["last_name"], students[x]["first_name"], x)):
         results["data"].append(
-            {"firstname":students[id]["first_name"],
-             "lastname":students[id]["last_name"],
-             "present":server.student_present(id)})
+            {"firstname": students[id]["first_name"],
+             "lastname": students[id]["last_name"],
+             "details": students[id]["details"],
+             "present": server.student_present(id)})
     response = jsonify(results)
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')

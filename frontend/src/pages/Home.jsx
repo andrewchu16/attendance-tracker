@@ -37,14 +37,16 @@ function Table(){
         <tr className="w-full border p-2">
           <th className="w-1/6 px-5 text-left font-semibold">First Name</th>
           <th className="w-1/6 px-1 text-left font-semibold">Last Name</th>
-          <th className="w-2/3 text-right px-5 font-semibold">Here</th>
+          <th className="w-1/2 px-1 text-left font-semibold">Details</th>
+          <th className="w-1/6 text-right px-5 font-semibold">Here</th>
         </tr>
         {data.map((val, key) => {
           return (
             <tr key={key} className="w-full p-1">
               <td className="w-1/6 px-5">{val.firstname}</td>
               <td className="w-1/6 px-1">{val.lastname}</td>
-              <td className="w-2/3 text-right px-5">{
+              <td className="w-1/2 px-1">{val.details}</td>
+              <td className="w-1/6 text-right px-5">{
                 val.present ? '✅' : '❌'
               }</td>
             </tr>
