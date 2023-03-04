@@ -60,31 +60,22 @@ function AttendanceUpload() {
         res.json();
       })
       .then((serverTicketId) => {
-        localforage
-          .getItem("attendances")
-          .then((cachedAttendances) => {
-            const newAttendanceData = {
-              image: file,
-              ticketId: serverTicketId,
-            };
-            console.log(serverTicketId);
-            // save to local forage
-            localforage.setItem(
-              "attendances",
-              cachedAttendances !== null
-                ? [...cachedAttendances, newAttendanceData]
-                : [newAttendanceData]
-            );
-            // update component
-            let newAttendance = {
-              ...newAttendanceData,
-              handleDelete: () => {
-                setAttendances(atttendances.filter((a) => newAttendance !== a));
-              },
-            };
-            setAttendances([...attendances, newAttendance]);
-          })
-          .then((imageData) => {
+        localforage.getItem("attendances").then((cachedAttendances) => {
+          const newAttendanceData = {
+            image: file,
+            ticketId: serverTicketId,
+          };
+          console.log(serverTicketId);
+          // save to local forage
+          localforage.setItem(
+            "attendances",
+            cachedAttendances !== null
+              ? [...cachedAttendances, newAttendanceData]
+              : [newAttendanceData]
+          );
+          fetch("http://127.0.0.1:5000/remove_student" + serverTicketId, {
+            method: "GET",
+          }).then((imageData) => {
             // update local forage once server finishes processing
             localforage.setItem(
               "attendances",
@@ -104,6 +95,15 @@ function AttendanceUpload() {
               )
             );
           });
+          // update component
+          let newAttendance = {
+            ...newAttendanceData,
+            handleDelete: () => {
+              setAttendances(atttendances.filter((a) => newAttendance !== a));
+            },
+          };
+          setAttendances([...attendances, newAttendance]);
+        });
       });
   };
 
