@@ -86,13 +86,13 @@ def upload_attendance():
         status = 400
 
     id = server.add_attendance(image)
-    thing = server.judge_attendance(id)
+    server.judge_attendance(id)
     
     # i think you can just create a ticket id as dict key, call recognition.py on the file, and then store it in the dict
     # send id back to client
     # Flask request documentation **
     # request.files
-    response = make_response(str(thing))
+    response = make_response("{}")
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

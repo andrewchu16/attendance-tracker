@@ -75,16 +75,16 @@ function AttendanceUpload() {
        body: file,
       headers: {
         "content-type": file.type,
-        "content-length": `${file.size}`,
+        "content-length": `${file.size}`
       },
     })
-      .then((res) => res.json())
+      .then((res) => {res.json()})
       .then((data) => {
         console.log(data);
         localforage.getItem("attendances").then((value) => {
           const newAttendance = {
             image: file,
-            ticket_id: data,
+            ticket_id: data
           };
           localforage
             .setItem(
