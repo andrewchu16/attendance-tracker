@@ -109,8 +109,7 @@ class Server:
         return False
 
     # "Getter" methods
-    """Get the entire student list
-    """
+    """Get the entire student list"""
     def get_students(self) -> dict:
         return self.data["students"]
 
@@ -129,3 +128,12 @@ class Server:
     def student_present(self, id: int) -> bool:
         student = self.get_student(id)
         return len(student["appears"]) > 0
+    
+    """Get the entire attendance list"""
+    def get_attendances(self) -> dict:
+        return self.data["attendances"]
+
+    """Get information about the specified attendance image"""
+    def get_attendance(self, id: int) -> dict:
+        return self.data["attendances"][id]
+    
