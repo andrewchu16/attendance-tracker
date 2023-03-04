@@ -83,7 +83,7 @@ function NewPersonForm() {
           className="flex flex-col relative items-center justify-center w-full h-[500px] border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 mb-4"
         >
           {imagePreview}
-          <div className="bg-white z-20 flex justify-center flex-col bg-[rgba(255,255,255,0.4)] rounded-xl p-2 absolute">
+          <div className="bg-white z-20 flex justify-center flex-col bg-[rgba(255,255,255,0.6)] rounded-xl p-2 absolute">
             <FontAwesomeIcon icon={faUpload} className="text-gray-500 text-2xl" />
             <p className="mb-2 text-gray-500">
               <span className="font-semibold">Upload</span> student image.
