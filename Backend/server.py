@@ -11,7 +11,7 @@ class Server:
         print("WHAT THE FUCK IS GOING ON HUH")
         # Read the database
         with open("database.json", "r") as d:
-            self.data = json.loads(d)
+            self.data = json.loads(d.read())
 
     """Update the database"""
     def write(self) -> None:
