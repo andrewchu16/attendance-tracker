@@ -3,8 +3,7 @@ import localforage from "localforage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
-function AttendanceImage({ image, ticketId, onDelete }) {
-  // console.log(image);
+function AttendanceImage({ image, ticketId }) {
   return (
     <div className="bg-gray-100 rounded-lg flex justify-center items-center relative aspect-square overflow-clip">
       <div className="z-20 opacity-0 absolute hover:opacity-100 h-full w-full transition-opacity cursor-pointer">
