@@ -38,7 +38,7 @@ function NewPersonForm() {
   }
 
   const imagePreview = imgURL !== null ? <img src={imgURL} className="max-w-full max-h-full" /> : "";
-  const banner = <div className="w-full">{studentId !== null ? "Uploaded successfully." : ""}</div>;
+  const banner = studentId !== null ? <p className="w-full h-20 rounded-md bg-green-100">Uploaded successful.</p> : <></>;
   return (
     <>
       {banner}
