@@ -6,8 +6,8 @@ import { faUpload, faTrash } from "@fortawesome/free-solid-svg-icons";
 function AttendanceImage({ image, ticket_id }) {
   console.log(ticket_id);
   return (
-    <div className="bg-gray-100 rounded-lg flex justify-center items-center">
-      <img src={image} className="aspect-square rounded-lg object-scale-down"/>
+    <div className="bg-gray-100 rounded-lg flex justify-center items-center relative">
+        <img src={image} className="aspect-square rounded-lg object-scale-down" />
     </div>
   );
 }
@@ -70,16 +70,39 @@ function AttendanceUpload() {
         });
     });
 
-    // fetch('http://localhost:5000/upload_attendance', {
-    //   method: 'POST',
+    // fetch("http://localhost:5000/upload_attendance", {
+    //   method: "POST",
     //   body: file,
     //   headers: {
-    //     'content-type': file.type,
-    //     'content-length': `${file.size}`,
+    //     "content-type": file.type,
+    //     "content-length": `${file.size}`,
     //   },
     // })
     //   .then((res) => res.json())
-    //   .then((data) => console.log(data))
+    //   .then((data) => {
+    //     console.log(data);
+    //     localforage.getItem("attendances").then((value) => {
+    //       const newAttendance = {
+    //         image: file,
+    //         ticket_id: data,
+    //       };
+    //       localforage
+    //         .setItem(
+    //           "attendances",
+    //           value !== null ? [...value, newAttendance] : [newAttendance]
+    //         )
+    //         .then((value) => {
+    //           setAttendances([
+    //             ...attendances,
+    //             <AttendanceImage
+    //               image={window.URL.createObjectURL(newAttendance.image)}
+    //               ticket_id={newAttendance.ticket_id}
+    //               key={newAttendance.ticket_id}
+    //             />,
+    //           ]);
+    //         });
+    //     });
+    //   })
     //   .catch((err) => console.error(err));
   };
 
