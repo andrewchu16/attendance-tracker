@@ -7,4 +7,3 @@ send to backend:
 
 receive from backend:
 - json containing which people are in the image and their position
-- image with red box
