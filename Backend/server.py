@@ -1,7 +1,6 @@
 import json
 import random
 import os
-
 import recognition
 
 class Server:
@@ -98,6 +97,7 @@ class Server:
         attendance["faces"] = recognition.take_attendance(attendance["image_path"], self.get_students())
         for face in attendance["faces"]:
             self.add_student_appearance(face["student"], id)
+        print(attendance["faces"])
         return attendance["faces"]
     
     """Remove an attendance list
