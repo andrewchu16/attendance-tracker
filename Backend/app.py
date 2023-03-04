@@ -146,6 +146,15 @@ def get_current_attendance():
         "william wu's girl": false
     }
     """
-    pass
+
+    current_attendance = dict()
+    for id in server.get_students():
+        if len(server.get_student(id)["appears"]) > 0:
+            get_current_attendance[server.get_student(id)["first_name"] + " " + server.get_student(id)["last_name"]] = True
+        else:
+            get_current_attendance[server.get_student(id)["first_name"] + " " + server.get_student(id)["last_name"]] = False
+    
+    response = make_response(json.dumps(current_attendance))
+    return response
 
 
