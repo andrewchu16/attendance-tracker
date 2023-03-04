@@ -10,7 +10,7 @@ def encode_student(image_path: str) -> list:
     return None
 
 def take_attendance(image_path: str, students: dict) -> list:
-    t = 0.7
+    t = 0.4
     
     # Load the student photos to numpy format for comparisons
     present_students = dict()
@@ -37,7 +37,7 @@ def take_attendance(image_path: str, students: dict) -> list:
     faces = []
 
     for id in present_students:
-        matches = face_recognition.compare_faces(face_encodings, students[id]['encoding'])
+        matches = face_recognition.compare_faces(face_encodings, students[id]['encoding'], tolerance=t)
         # ignoring the case that there are > 1 matches for now
         if True in matches:
             index = matches.index(True)
