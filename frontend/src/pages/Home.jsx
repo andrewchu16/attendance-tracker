@@ -18,13 +18,15 @@ function Table(){
   useEffect(() => {
     fetch("http://127.0.0.1:5000/current_attendance", {
       method: "GET",
-      body: data,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      //headers: {},
     }).then((raw) => {
+        console.log(raw);
         return raw.json()
       }).then((value) => {
         setData(value);
         console.log(value["data"]);
+        setData(value["data"]);
+        console.log(value);
       }
     ),
     []
