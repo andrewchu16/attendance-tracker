@@ -20,9 +20,10 @@ function NewPersonForm() {
     data.append("details", detailsInput.current.value);
     data.append("student_photo", fileInput.current.files[0]);
 
+    console.log("EE");
     fetch("http://127.0.0.1:5000/upload_student", {
       method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: { "content-type": "multipart/form-data" },
       body: data,
     }).then((id) => {
       console.log(id);
@@ -41,7 +42,7 @@ function NewPersonForm() {
   return (
     <>
       {banner}
-      <form className="bg-gray-200 flex flex-col gap-2 p-5 rounded-lg">
+      <form className="bg-gray-200 flex flex-col gap-2 p-5 rounded-lg" onSubmit={handleSubmit}>
         <label htmlFor="first_name" className="ml-2">
           First Name
         </label>
@@ -87,6 +88,7 @@ function NewPersonForm() {
             <span className="font-semibold">Upload</span> student image.
           </p>
           <input
+            ref={fileInput}
             id="student_photo"
             type="file"
             className="hidden"
@@ -97,7 +99,6 @@ function NewPersonForm() {
         <button
           type="submit"
           className="bg-gray-600 text-gray-100 p-2 rounded-md hover:bg-gray-700 transition-colors"
-          onSubmit={handleSubmit}
         >
           Upload
         </button>
