@@ -14,19 +14,22 @@ function Home() {
 }
 
 function Table(){
-  /*const [data, setData] = useState([])
+  const [data, setData] = useState([])
   useEffect(() => {
     fetch("http://127.0.0.1:5000/current_attendance", {
       method: "GET",
       body: data,
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then((raw) => {
-
+        return raw.json()
+      }).then((value) => {
+        setData(value);
+        console.log(value);
       }
     ),
     []
-  });*/
-  const data = [{firstname:"bob", lastname:"smith", present:true}]
+  });
+  //const data = [{firstname:"bob", lastname:"smith", present:true}]
   return (
     <div className="text-xl">
       <table className="w-full m-0 border">
