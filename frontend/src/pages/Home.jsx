@@ -23,22 +23,21 @@ function Table(){
         console.log(raw);
         return raw.json()
       }).then((value) => {
-        setData(value);
         console.log(value["data"]);
         setData(value["data"]);
         console.log(value);
       }
     ),
     []
-  });
+  }, []);
   //const data = [{firstname:"bob", lastname:"smith", present:true}]
   return (
     <div className="text-xl">
       <table className="w-full m-0 border">
         <tr className="w-full border p-2">
-          <th className="w-1/6 px-5 text-left">First Name</th>
-          <th className="w-1/6 px-1 text-left">Last Name</th>
-          <th className="w-2/3 text-right px-5">Here</th>
+          <th className="w-1/6 px-5 text-left font-semibold">First Name</th>
+          <th className="w-1/6 px-1 text-left font-semibold">Last Name</th>
+          <th className="w-2/3 text-right px-5 font-semibold">Here</th>
         </tr>
         {data.map((val, key) => {
           return (
@@ -46,11 +45,7 @@ function Table(){
               <td className="w-1/6 px-5">{val.firstname}</td>
               <td className="w-1/6 px-1">{val.lastname}</td>
               <td className="w-2/3 text-right px-5">{
-                () => { if (val.present){
-                  return "✓";
-                } else {
-                  return "✗";
-                }}
+                val.present ? '✅' : '❌'
               }</td>
             </tr>
           )
