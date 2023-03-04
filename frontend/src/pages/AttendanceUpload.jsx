@@ -47,63 +47,63 @@ function AttendanceUpload() {
 
   const handleUpload = (file) => {
     console.log(file);
-    localforage.getItem("attendances").then((value) => {
-      const newAttendance = {
-        image: file,
-        ticket_id:
-          value !== null ? value[value.length - 1]["ticket_id"] + 1 : 0,
-      };
-      localforage
-        .setItem(
-          "attendances",
-          value !== null ? [...value, newAttendance] : [newAttendance]
-        )
-        .then((value) => {
-          setAttendances([
-            ...attendances,
-            <AttendanceImage
-              image={window.URL.createObjectURL(newAttendance.image)}
-              ticket_id={newAttendance.ticket_id}
-              key={newAttendance.ticket_id}
-            />,
-          ]);
-        });
-    });
-
-    // fetch("http://localhost:5000/upload_attendance", {
-    //   method: "POST",
-    //   body: file,
-    //   headers: {
-    //     "content-type": file.type,
-    //     "content-length": `${file.size}`,
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     localforage.getItem("attendances").then((value) => {
-    //       const newAttendance = {
-    //         image: file,
-    //         ticket_id: data,
-    //       };
-    //       localforage
-    //         .setItem(
-    //           "attendances",
-    //           value !== null ? [...value, newAttendance] : [newAttendance]
-    //         )
-    //         .then((value) => {
-    //           setAttendances([
-    //             ...attendances,
-    //             <AttendanceImage
-    //               image={window.URL.createObjectURL(newAttendance.image)}
-    //               ticket_id={newAttendance.ticket_id}
-    //               key={newAttendance.ticket_id}
-    //             />,
-    //           ]);
-    //         });
+    // localforage.getItem("attendances").then((value) => {
+    //   const newAttendance = {
+    //     image: file,
+    //     ticket_id:
+    //       value !== null ? value[value.length - 1]["ticket_id"] + 1 : 0,
+    //   };
+    //   localforage
+    //     .setItem(
+    //       "attendances",
+    //       value !== null ? [...value, newAttendance] : [newAttendance]
+    //     )
+    //     .then((value) => {
+    //       setAttendances([
+    //         ...attendances,
+    //         <AttendanceImage
+    //           image={window.URL.createObjectURL(newAttendance.image)}
+    //           ticket_id={newAttendance.ticket_id}
+    //           key={newAttendance.ticket_id}
+    //         />,
+    //       ]);
     //     });
-    //   })
-    //   .catch((err) => console.error(err));
+    // });
+
+     fetch("http://127.0.0.1:5000/upload_attendance", {
+       method: "POST",
+       body: file,
+      headers: {
+        "content-type": file.type,
+        "content-length": `${file.size}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        localforage.getItem("attendances").then((value) => {
+          const newAttendance = {
+            image: file,
+            ticket_id: data,
+          };
+          localforage
+            .setItem(
+              "attendances",
+              value !== null ? [...value, newAttendance] : [newAttendance]
+            )
+            .then((value) => {
+              setAttendances([
+                ...attendances,
+                <AttendanceImage
+                  image={window.URL.createObjectURL(newAttendance.image)}
+                  ticket_id={newAttendance.ticket_id}
+                  key={newAttendance.ticket_id}
+                />,
+              ]);
+            });
+        });
+      })
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
