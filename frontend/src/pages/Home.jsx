@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useEffect, useState } from "react";
 
 function Home() {
   return (
@@ -14,11 +14,15 @@ function Home() {
 }
 
 function Table(){
-  const data = [
-    { firstname: "Anom", lastname: "Subham", present: "✓" },
-    { firstname: "Megha", lastname: "Anom", present: "✓" },
-    { firstname: "Subham", lastname: "Megha", present: "✗"},
-  ]
+  const [data, setData] = useState([])
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/current_attendance", {
+      method: "GET",
+      body: data,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }),
+    []
+  });
   return (
     <div className="text-xl">
       <table className="w-full m-0 border">
