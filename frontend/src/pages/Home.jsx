@@ -46,11 +46,7 @@ function Table(){
               <td className="w-1/6 px-5">{val.firstname}</td>
               <td className="w-1/6 px-1">{val.lastname}</td>
               <td className="w-2/3 text-right px-5">{
-                () => { if (val.present){
-                  return "✓";
-                } else {
-                  return "✗";
-                }}
+                val.present ? '✅' : '❌'
               }</td>
             </tr>
           )
