@@ -6,7 +6,7 @@ function CanvasOverlay(props) {
   useEffect(() =>{
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#aa0000";
     ctx.fillRect(5, 0, 10, 10);
   }, []);
 

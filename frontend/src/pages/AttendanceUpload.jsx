@@ -4,12 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faTrash } from "@fortawesome/free-solid-svg-icons";
 import CanvasOverlay from "../components/CanvasOverlay";
 
-function AttendanceImage({ image, ticket_id }) {
-  console.log(image);
+function AttendanceImage({ image, ticketId, onDelete }) {
+  // console.log(image);
   return (
-    <div className="bg-gray-100 rounded-lg flex justify-center items-center relative aspect-square">
+    <div className="bg-gray-100 rounded-lg flex justify-center items-center relative aspect-square overflow-clip">
+      <div className="z-20 opacity-0 absolute hover:opacity-100 h-full w-full transition-opacity cursor-pointer">
+        <div className="bg-gray-900 h-full w-full opacity-30"></div>
+        <FontAwesomeIcon
+          icon={faTrash}
+          className="absolute right-5 top-5 text-4xl text-gray-600 hover:text-red-600 transition-colors"
+          onClick={onDelete}
+        />
+      </div>
       <CanvasOverlay className="h-full w-full absolute top-0 left-0" />
-      <img src={image} className="aspect-square rounded-lg object-scale-down" />
+      <img src={image} className="aspect-square object-scale-down" />
     </div>
   );
 }
@@ -48,27 +56,28 @@ function AttendanceUpload() {
   const [status, setStatus] = useState("");
 
   const handleUpload = (file) => {
-    console.log(file);
+    // console.log(file);
     // localforage.getItem("attendances").then((value) => {
-    //   const newAttendance = {
+    //   const newAttendanceData = {
     //     image: file,
-    //     ticket_id:
-    //       value !== null ? value[value.length - 1]["ticket_id"] + 1 : 0,
+    //     ticketId: value !== null ? value[value.length - 1]["ticketId"] + 1 : 0,
     //   };
+
+    //   // save to local forage
     //   localforage
     //     .setItem(
     //       "attendances",
-    //       value !== null ? [...value, newAttendance] : [newAttendance]
+    //       value !== null ? [...value, newAttendanceData] : [newAttendanceData]
     //     )
-    //     .then((value) => {
-    //       setAttendances([
-    //         ...attendances,
-    //         <AttendanceImage
-    //           image={window.URL.createObjectURL(newAttendance.image)}
-    //           ticket_id={newAttendance.ticket_id}
-    //           key={newAttendance.ticket_id}
-    //         />,
-    //       ]);
+    //     .then((_) => {
+    //       // update component
+    //       let newAttendance = {
+    //         ...newAttendanceData,
+    //         handleDelete: () => {
+    //           setAttendances(attendances.filter((a) => newAttendance !== a));
+    //         },
+    //       };
+    //       setAttendances([...attendances, newAttendance]);
     //     });
     // });
 
@@ -83,27 +92,32 @@ function AttendanceUpload() {
       .then((res) => {
         res.json();
       })
-      .then((data) => {
-        console.log(data);
+      .then((serverTicketId) => {
         localforage.getItem("attendances").then((value) => {
           const newAttendanceData = {
             image: file,
-            ticket_id: data,
+            ticketId: serverTicketId,
           };
+
+          // save to local forage
           localforage
             .setItem(
               "attendances",
-              value !== null ? [...value, newAttendanceData] : [newAttendanceData]
+              value !== null
+                ? [...value, newAttendanceData]
+                : [newAttendanceData]
             )
             .then((value) => {
-              setAttendances([
-                ...attendances,
-                <AttendanceImage
-                  image={window.URL.createObjectURL(newAttendanceData.image)}
-                  ticket_id={newAttendanceData.ticket_id}
-                  key={newAttendanceData.ticket_id}
-                />,
-              ]);
+              // update component
+              let newAttendance = {
+                ...newAttendanceData,
+                handleDelete: () => {
+                  setAttendances(
+                    atttendances.filter((a) => newAttendance !== a)
+                  );
+                },
+              };
+              setAttendances([...attendances, newAttendance]);
             });
         });
       })
@@ -119,15 +133,18 @@ function AttendanceUpload() {
         if (value === null) {
           setAttendances([]);
         } else {
-          let tmp = value.map((v) => (
-            <AttendanceImage
-              image={window.URL.createObjectURL(v["image"])}
-              ticket_id={v["ticket_id"]}
-              key={v["ticket_id"]}
-            />
-          ));
+          let tmpAttendances = value.map((attendanceData) => ({
+            ...attendanceData,
+            handleDelete: () => {
+              setAttendances(
+                attendances.filter(
+                  (v, i) => v.ticketId !== attendanceData.ticketId
+                )
+              );
+            },
+          }));
 
-          setAttendances(tmp);
+          setAttendances(tmpAttendances);
         }
       })
       .catch((err) => {
@@ -143,11 +160,20 @@ function AttendanceUpload() {
     return "loading";
   }
 
+  const attendanceElems = attendances.map((v) => (
+    <AttendanceImage
+      image={window.URL.createObjectURL(v.image)}
+      ticketId={v.ticketId}
+      key={v.ticketId}
+      onDelete={v.handleDelete}
+    />
+  ));
+
   return (
     <div className="h-full w-full mb-8 py-8 px-12">
       <h1 className="text-4xl text-center mb-3">Upload Attendance Photos</h1>
       <div className="grid grid-cols-3 min-h-96 w-full gap-4">
-        {attendances}
+        {attendanceElems}
         <NewAttendanceButton uploadFile={handleUpload} />
       </div>
     </div>
