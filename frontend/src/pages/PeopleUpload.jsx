@@ -20,10 +20,9 @@ function NewPersonForm() {
     data.append("details", detailsInput.current.value);
     data.append("student_photo", fileInput.current.files[0]);
 
-    console.log("EE");
     fetch("http://127.0.0.1:5000/upload_student", {
       method: "POST",
-      headers: { "content-type": "multipart/form-data" },
+    //  headers: { "content-type": "multipart/form-data" },
       body: data,
     }).then((id) => {
       console.log(id);
