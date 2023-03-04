@@ -11,7 +11,6 @@ def encode_student(image_path: str) -> list:
     return None
 
 def take_attendance(image_path: str, students: dict) -> list:
-<<<<<<< Updated upstream
     t = 0.4
     
     # Load the student photos to numpy format for comparisons
