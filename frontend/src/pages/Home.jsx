@@ -20,7 +20,10 @@ function Table(){
       method: "GET",
       body: data,
       headers: { 'Content-Type': 'multipart/form-data' },
-    }),
+    }).then((raw) => {
+
+      }
+    ),
     []
   });*/
   const data = [{firstname:"bob", lastname:"smith", present:true}]
