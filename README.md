@@ -1,9 +1,3 @@
-# attendance-tracker
-YRHacks 2023 project
+# Eyedentify
 
-send to backend:
-- image associated with a person
-- image to do attendance with
-
-receive from backend:
-- json containing which people are in the image and their position
+This is Team WALL's submission for YRHacks 2023. Our project lets you do attendance using facial recognition.

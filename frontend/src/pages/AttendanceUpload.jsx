@@ -60,35 +60,51 @@ function AttendanceUpload() {
         res.json();
       })
       .then((serverTicketId) => {
-        localforage.getItem("attendances").then((value) => {
-          const newAttendanceData = {
-            image: file,
-            ticketId: serverTicketId,
-          };
-          console.log(serverTicketId);
-          // save to local forage
-          localforage
-            .setItem(
+        localforage
+          .getItem("attendances")
+          .then((cachedAttendances) => {
+            const newAttendanceData = {
+              image: file,
+              ticketId: serverTicketId,
+            };
+            console.log(serverTicketId);
+            // save to local forage
+            localforage.setItem(
               "attendances",
-              value !== null
-                ? [...value, newAttendanceData]
+              cachedAttendances !== null
+                ? [...cachedAttendances, newAttendanceData]
                 : [newAttendanceData]
-            )
-            .then((value) => {
-              // update component
-              let newAttendance = {
-                ...newAttendanceData,
-                handleDelete: () => {
-                  setAttendances(
-                    atttendances.filter((a) => newAttendance !== a)
-                  );
-                },
-              };
-              setAttendances([...attendances, newAttendance]);
-            });
-        });
-      })
-      .catch((err) => console.error(err));
+            );
+            // update component
+            let newAttendance = {
+              ...newAttendanceData,
+              handleDelete: () => {
+                setAttendances(atttendances.filter((a) => newAttendance !== a));
+              },
+            };
+            setAttendances([...attendances, newAttendance]);
+          })
+          .then((imageData) => {
+            // update local forage once server finishes processing
+            localforage.setItem(
+              "attendances",
+              attendances.map((attendance) =>
+                attendance.ticketId == newAttendanceData.ticketId
+                  ? { image: imageData, ticketId: newAttendance.ticketId }
+                  : attendance
+              )
+            );
+
+            // update components
+            setAttendances(
+              attendances.map((attendance) =>
+                attendance.ticketId == newAttendanceData.ticketId
+                  ? { image: imageData, ticketId: newAttendance.ticketId }
+                  : attendance
+              )
+            );
+          });
+      });
   };
 
   useEffect(() => {
