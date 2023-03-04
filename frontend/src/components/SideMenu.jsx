@@ -6,7 +6,7 @@ function SideMenu() {
             <div className="flex flex-col gap-3 text-xl">
                 <NavLink className={({ isActive }) => isActive ? "font-semibold" : "" } to="/">Students List</NavLink>
                 <NavLink className={({ isActive }) => isActive ? "font-semibold" : "" } to="/upload-attendance">Upload Attendance</NavLink>
-                <NavLink className={({ isActive }) => isActive ? "font-semibold" : "" } to="/upload-students">Upload Student</NavLink>
+                <NavLink className={({ isActive }) => isActive ? "font-semibold" : "" } to="/upload-student">Upload Student</NavLink>
             </div>
         </nav>
     )
