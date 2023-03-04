@@ -22,7 +22,6 @@ function NewPersonForm() {
 
     fetch("http://127.0.0.1:5000/upload_student", {
       method: "POST",
-    //  headers: { "content-type": "multipart/form-data" },
       body: data,
     }).then((response) => {
       return response.json();
@@ -34,11 +33,11 @@ function NewPersonForm() {
 
   const handleFileChange = (e) => {
     if (e.target.files) {
-      setImgURL(e.target.files[0]);
+      setImgURL(window.URL.createObjectURL(e.target.files[0]));
     }
   }
 
-  const imagePreview = imgURL !== null ? <img src={imgURL} className="z-20 absolute" /> : "";
+  const imagePreview = imgURL !== null ? <img src={imgURL} className="absolute object-fill" /> : "";
   const banner = <div className="w-full">{studentId !== null ? "Uploaded successfully." : ""}</div>;
   return (
     <>
@@ -81,13 +80,15 @@ function NewPersonForm() {
         />
         <label
           htmlFor="student_photo"
-          className="flex flex-col relative items-center justify-center w-full p-4 h-52 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 mb-4"
+          className="flex flex-col relative items-center justify-center w-full p-4 h-52 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 mb-4 overflow-clip"
         >
           {imagePreview}
-          <FontAwesomeIcon icon={faUpload} className="text-gray-500 text-2xl" />
-          <p className="mb-2 text-gray-500">
-            <span className="font-semibold">Upload</span> student image.
-          </p>
+          <div className="bg-white z-20 flex justify-center flex-col bg-[rgba(255,255,255,0.6)] rounded-xl p-2">
+            <FontAwesomeIcon icon={faUpload} className="text-gray-500 text-2xl" />
+            <p className="mb-2 text-gray-500">
+              <span className="font-semibold">Upload</span> student image.
+            </p>
+          </div>
           <input
             ref={fileInput}
             id="student_photo"
