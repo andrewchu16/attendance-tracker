@@ -98,7 +98,7 @@ function AttendanceUpload() {
             image: file,
             ticketId: serverTicketId,
           };
-
+          console.log(serverTicketId);
           // save to local forage
           localforage
             .setItem(
