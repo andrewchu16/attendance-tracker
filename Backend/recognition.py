@@ -1,5 +1,5 @@
 import face_recognition
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 """Returns the encoding for a student's face
 """
@@ -11,7 +11,7 @@ def encode_student(image_path: str) -> list:
     return None
 
 def take_attendance(image_path: str, students: dict) -> list:
-    t = 0.4
+    t = 0.45
     
     # Load the student photos to numpy format for comparisons
     present_students = dict()
@@ -43,10 +43,11 @@ def take_attendance(image_path: str, students: dict) -> list:
     )
 
     faces = []
-
+    print("FHGSJDGOISJGS")
     for id in present_students:
         matches = face_recognition.compare_faces(face_encodings, students[id]['encoding'], tolerance=t)
         # ignoring the case that there are > 1 matches for now
+        print(matches)
         if True in matches:
             index = matches.index(True)
             location = face_locations[index]
@@ -67,10 +68,14 @@ def take_attendance(image_path: str, students: dict) -> list:
             x, y, w, h, id = face["x"], face["y"], face["width"], face["height"], face["student"]
             #print(x, y, w, h)
             canvas.rectangle(((y, x), (h, w)), outline="red")
+            #canvas.font.size 
             #print(students)
             message = students[id]["first_name"] + " " + students[id]["last_name"]
-            text_w, text_h = canvas.textsize(message)
-            canvas.text((y+h+text_h, x+w//2-text_w//2), message, fill="red")
+            #text_w, text_h = canvas.textsize(message)
+            font = ImageFont.truetype("Roboto/Roboto-Bold.ttf", h//5)
+            #canvas.text((y+h+text_h, x+w//2-text_w//2), message, fill="red")
+            canvas.text((y, x), students[id]["first_name"], fill="red", font=font)
+            canvas.text((y, x+h//5), students[id]["last_name"], fill="red", font=font)
             image.save(image_path, "JPEG")
 
     # but in json format right? or do we draw the bounding boxes in
