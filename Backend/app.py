@@ -28,16 +28,17 @@ def upload_student():
     first_name = request.args.get("first_name")
     last_name = request.args.get("last_name")
     details = request.args.get("details")
+    status = 200
     if "student_photo" in request.files and request.files["student_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
         image = request.files["student_photo"]
     else:
         image = None
         status = 400
     
-    server.add_student(first_name, last_name, image, details)
+    student_id = server.add_student(first_name, last_name, image, details)
 
-    response = make_response('upload_student_response')
-    response.status_code = status
+    response = make_response(redirect("http://127.0.0.1:5173/upload-students", f"{student_id}"))
+    response.status_code = 301
     return response
         
     

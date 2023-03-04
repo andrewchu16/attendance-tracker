@@ -3,7 +3,7 @@ import localforage from "localforage";
 
 function NewPersonForm() {
   return (
-    <form action="http://127.0.0.1/upload_student" method="POST" encType="multipart/form-data" className="bg-gray-200 flex flex-col gap-4 p-4" >
+    <form action="http://127.0.0.1:5000/upload_student" method="POST" encType="multipart/form-data" className="bg-gray-200 flex flex-col gap-4 p-4" >
       <h2 className="text-2xl mb-1">Add a Student</h2>
       <input name="first_name" type="text" className="bg-white p-2 rounded-md" placeholder="Michael" required />
       <input name="last_name" type="text" className="bg-white p-2 rounded-md" placeholder="Smith" required />

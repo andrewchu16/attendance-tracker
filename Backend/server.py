@@ -39,7 +39,7 @@ class Server:
         while id == -1 or id in self.data["students"]:
             id = random.randint(1, 1e9)
         # Save the student image
-        filename = str(id) + image.filename.split(".")[-1].lower()
+        filename = str(id) + "." + image.filename.split(".")[-1].lower()
         filepath = os.path.join("imgs/students", filename)
         image.save(filepath)
         # Set the image filepath
@@ -98,7 +98,6 @@ class Server:
         attendance["faces"] = recognition.take_attendance(attendance["image_path"], self.get_students())
         for face in attendance["faces"]:
             self.add_student_appearance(face["student"], id)
-        print(attendance["faces"])
         return attendance["faces"]
     
     """Remove an attendance list
