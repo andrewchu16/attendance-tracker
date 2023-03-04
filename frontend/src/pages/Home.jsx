@@ -24,7 +24,7 @@ function Table(){
         return raw.json()
       }).then((value) => {
         setData(value);
-        console.log(value);
+        console.log(value["data"]);
       }
     ),
     []

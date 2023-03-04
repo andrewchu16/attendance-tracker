@@ -154,18 +154,19 @@ def get_current_attendance():
     """
     Send json containing people who are present and absent.
     {
-        "john doe": true,
-        "mike zhan": true,
-        "peter pa": true,
-        "luke zhan": false,
-        "william wu's girl": false
+        "firstname":"john", "lastname":"doe", "present:true,
+        "firstname":"mike", "lastname":"zhan", "present:true,
+        "firstname":"peter", "lastname":"pa", "present:true,
+        "firstname":"luke", "lastname":"zhan", "present:false,
+        "firstname":"wu's", "lastname":"gf", "present:true
     }
     """
-    results = {}
+    results = {"data":[]}
     students = server.get_students()
     for id in sorted(students, key = lambda x: (students[x]["last_name"], students[x]["first_name"], x)):
-        name = students[id]["first_name"] + " " + students[id]["last_name"]
-        results[name] = server.student_present(id)
+        results["data"]["firstname"] = students[id]["first_name"]
+        results["data"]["lastname"] = students[id]["last_name"]
+        results["data"]["present"] = server.student_present(id)
     response = jsonify(results)
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')
