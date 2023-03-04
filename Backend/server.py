@@ -8,7 +8,6 @@ class Server:
     
     """Initialize the server"""
     def __init__(self) -> None:
-        print("WHAT THE FUCK IS GOING ON HUH")
         # Read the database
         with open("database.json", "r") as d:
             self.data = json.loads(d.read())
