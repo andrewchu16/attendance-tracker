@@ -24,9 +24,11 @@ function NewPersonForm() {
       method: "POST",
     //  headers: { "content-type": "multipart/form-data" },
       body: data,
-    }).then((id) => {
-      console.log(id);
-      setStudentId(studentId);
+    }).then((response) => {
+      return response.json();
+    }).then((value) => {
+      console.log(value);
+      setStudentId(value["id"]);
     });
   };
 

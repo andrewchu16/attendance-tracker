@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, make_response
+from flask import Flask, render_template, redirect, request, url_for, make_response, jsonify
 from server import Server
 from recognition import take_attendance
 from random import randint
@@ -38,7 +38,8 @@ def upload_student():
     
     student_id = server.add_student(first_name, last_name, image, details)
 
-    response = make_response("{" + str(student_id) + "}")
+    result = {"id": student_id}
+    response = jsonify(result)
     response.status_code = status
     return response
         
