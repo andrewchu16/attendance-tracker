@@ -79,20 +79,22 @@ def upload_attendance():
         "ticket_id": <id>
     }
     """
-    if "attendance_photo" in request.files and request.files["attendance_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
-        image = request.files["attendance_photo"]
-    else:
-        image = None
-        status = 400
+    #with open("thing.png", "wb") as f:
+    #    f.write(request.data)
+    #if "attendance_photo" in request.files and request.files["attendance_photo"].filename.split(".")[-1].lower() in VALID_FILE_TYPES:
+    #    image = request.files["attendance_photo"]
+    #else:
+    #    image = None
+    #    status = 400
 
-    id = server.add_attendance(image)
+    id = server.add_attendance(request.data)
     server.judge_attendance(id)
     
     # i think you can just create a ticket id as dict key, call recognition.py on the file, and then store it in the dict
     # send id back to client
     # Flask request documentation **
     # request.files
-    response = make_response("{}")
+    response = make_response(f"{id}")
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response

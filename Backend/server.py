@@ -81,9 +81,11 @@ class Server:
         while id == -1 or id in self.data["attendances"]:
             id = random.randint(1, 1e9)
         # Save the attendance image
-        filename = str(id) + image.filename.split(".")[-1].lower()
+        # assuming its a jpg right now
+        filename = str(id) + ".jpg"
         filepath = os.path.join("imgs/attendances", filename)
-        image.save(filepath)
+        with open(filepath, "wb") as picture:
+            picture.write(image)
         # Set the image filepath
         attendance["image_path"] = filepath
         # Add the attendance to the attendance list
