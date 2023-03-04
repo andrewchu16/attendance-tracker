@@ -144,8 +144,7 @@ def get_attendance_results():
         "count": len(faces),
         "students": faces
     }
-    results_json = json.dumps(results)
-    response = make_response(results_json)
+    response = jsonify(results)
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -167,8 +166,7 @@ def get_current_attendance():
     for id in sorted(students, key = lambda x: (students[x]["last_name"], students[x]["first_name"], x)):
         name = students[id]["first_name"] + " " + students[id]["last_name"]
         results[name] = server.student_present(id)
-    results_json = json.dumps(results)
-    response = make_response(results_json)
+    response = jsonify(results)
     response.status_code = 200
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
