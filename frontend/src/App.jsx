@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path="*" element={<NoPage />} />
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}/>
-          <Route path="/upload-attendance" element={<AttendanceUpload />}/>
-          <Route path="/upload-students" element={<PeopleUpload />}/>
+          <Route index element={<Home />} />
+          <Route path="/upload-attendance" element={<AttendanceUpload />} />
+          <Route path="/upload-students" element={<PeopleUpload />} />
         </Route>
       </Routes>
     </BrowserRouter>
