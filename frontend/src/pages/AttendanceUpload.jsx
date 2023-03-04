@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import localforage from "localforage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import CanvasOverlay from "../components/CanvasOverlay";
 
 function AttendanceImage({ image, ticketId, onDelete }) {
   // console.log(image);
@@ -11,7 +10,6 @@ function AttendanceImage({ image, ticketId, onDelete }) {
       <div className="z-20 opacity-0 absolute hover:opacity-100 h-full w-full transition-opacity cursor-pointer">
         <div className="bg-gray-900 h-full w-full opacity-30"></div>
       </div>
-      <CanvasOverlay className="h-full w-full absolute top-0 left-0" />
       <img src={image} className="aspect-square object-scale-down" />
     </div>
   );
@@ -51,31 +49,6 @@ function AttendanceUpload() {
   const [status, setStatus] = useState("");
 
   const handleUpload = (file) => {
-    // console.log(file);
-    // localforage.getItem("attendances").then((value) => {
-    //   const newAttendanceData = {
-    //     image: file,
-    //     ticketId: value !== null ? value[value.length - 1]["ticketId"] + 1 : 0,
-    //   };
-
-    //   // save to local forage
-    //   localforage
-    //     .setItem(
-    //       "attendances",
-    //       value !== null ? [...value, newAttendanceData] : [newAttendanceData]
-    //     )
-    //     .then((_) => {
-    //       // update component
-    //       let newAttendance = {
-    //         ...newAttendanceData,
-    //         handleDelete: () => {
-    //           setAttendances(attendances.filter((a) => newAttendance !== a));
-    //         },
-    //       };
-    //       setAttendances([...attendances, newAttendance]);
-    //     });
-    // });
-
     fetch("http://127.0.0.1:5000/upload_attendance", {
       method: "POST",
       body: file,
@@ -166,7 +139,7 @@ function AttendanceUpload() {
 
   return (
     <div className="h-full w-full mb-8 py-8 px-12">
-      <h1 className="text-4xl text-center mb-3">Upload Attendance Photos</h1>
+      <h1 className="text-4xl text-center mb-3">Attendance Photos</h1>
       <div className="grid grid-cols-3 min-h-96 w-full gap-4">
         {attendanceElems}
         <NewAttendanceButton uploadFile={handleUpload} />
