@@ -38,7 +38,7 @@ def upload_student():
     
     student_id = server.add_student(first_name, last_name, image, details)
 
-    response = make_response(f"{student_id}")
+    response = make_response("{" + str(student_id) + "}")
     response.status_code = status
     return response
         
