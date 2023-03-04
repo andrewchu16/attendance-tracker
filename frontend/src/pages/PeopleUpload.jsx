@@ -20,6 +20,7 @@ function NewPersonForm() {
 
     fetch("http://127.0.0.1:5000/upload_student", {
       method: "POST",
+      headers: { 'Content-Type': 'multipart/form-data' },
       body: data,
     }).then((id) => {
       console.log(id);
@@ -33,12 +34,8 @@ function NewPersonForm() {
         {studentId !== null ? `Student id: ${studentId}` : "empty for now..."}
       </p>
       <form
-        action="http://127.0.0.1:5000/upload_student"
-        method="POST"
-        encType="multipart/form-data"
-        className="bg-gray-200 flex flex-col gap-4 p-4"
+        className="bg-gray-200 flex flex-col gap-4 p-5 rounded-lg"
       >
-        <h2 className="text-2xl mb-1">Add a Student</h2>
         <input
           ref={firstNameInput}
           name="first_name"
@@ -84,10 +81,8 @@ function NewPersonForm() {
 function PeopleUpload() {
   return (
     <div className="mb-8 py-8 px-14">
-      <h1 className="text-4xl mb-4">Upload Students</h1>
+      <h1 className="text-4xl mb-4 text-center">Upload Student</h1>
       <NewPersonForm />
-      {/* <div className="grid grid-cols-2 bg-gray-100 rounded-lg gap-8 w-full px-8 py-8">
-      </div> */}
     </div>
   );
 }
