@@ -60,7 +60,7 @@ function AttendanceUpload() {
         res.json();
       })
       .then((serverTicketId) => {
-        localforage.getItem("attendances").then((value) => {
+        localforage.getItem("attendances").then((cachedAttendances) => {
           const newAttendanceData = {
             image: file,
             ticketId: serverTicketId,
